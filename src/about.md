@@ -4,20 +4,20 @@ title: 关于
 slug: about
 date: 2020-01-01 21:32
 status: publish
-author: 熊猫小A
+author: D0raemon
 categories:
 comment: false 
 tags: 
 ---
 
-这里是熊猫小A的个人Wiki，我在这里记录自己遇到与解决的技术问题，以及日常折腾笔记。希望能给你带来一点帮助。
+日常使用的一些小随笔，希望能帮到大家!
 
 ---
 
-**注：为了您的浏览体验，请尽量使用 Chrome、Firefox、Safari 浏览本站。站点不针对 IE 和 Edge 解决兼容问题。**
+**注：为了您的浏览体验，请尽量使用 Chrome、Firefox、Safari 浏览本站。博客不针对 IE 和 Edge 解决兼容问题。**
 
 ------
 
-邮件：hi#imalan.cn (请使用 @ 替换 #)
+邮件：vector051545@gmail.com
 
-Telegram：[AlanDecode](https://t.me/alandecode)
+Telegram：[AlanDecode](https://t.me/labu1ac)
