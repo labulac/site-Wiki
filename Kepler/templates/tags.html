@@ -7,7 +7,7 @@
 {% block og_url %}{{ Router.gen_permalink('tag', tag_name, 1) }}{% endblock %}
 {% block twitter_title %}{{ seo_title() }}{% endblock %}
 
-{% block page_title %}TAG: #{{ tag_name }}{% endblock page_title %}
+{% block page_title %}标签: #{{ tag_name }}{% endblock page_title %}
 
 {% block sidebar %}
     {{ build_sidebar() }}

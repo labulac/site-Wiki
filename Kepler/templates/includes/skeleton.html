@@ -59,7 +59,7 @@
                 </section>
             </div>
         </header>
-
+    
         <main>
             <div id="pjax-container" class="container">
                 <aside id="navbar" class="no-scrollbar">
@@ -79,7 +79,7 @@
                         {% endfor %}
                     </section>
                     <section class="maverick">
-                        <div><span style="border: 1px solid #d4dadf;"><a href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Kepler</a></span></div>
+                        <div><span style="border: 1px solid #d4dadf;"><a href="https://github.com/AlanDecode/Maverick" target="_blank">改掉了！！</a></span></div>
                     </section>
                 </aside>
                 <div id="content-wrapper">
@@ -115,7 +115,7 @@
                 }
             }
         </script>
-
+    
         <!--Valine-->
         {% if config.valine['enable'] %}
             <script>
@@ -127,7 +127,7 @@
             </script>
             <script async src='https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js' onload="initValine()"></script>
         {% endif %}
-
+    
         <!--ExSearch-->
         <script src="{{ Router.gen_static_file_prefix() }}assets/ExSearch/ExSearch-493cb9cd89.js"></script>
         
@@ -145,7 +145,7 @@
         };
         </script>
         <script defer src="{{ Router.gen_static_file_prefix() }}assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
-
+    
         {{ fp(config.body_addon) }}
     </body>
 </html>
