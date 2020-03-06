@@ -17,7 +17,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 ### 介绍
 
-<img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:50%;" />
+<img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:25%;" />
 
 ### 准备
 
@@ -25,7 +25,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 - Telegram Win Desktop （版本 ≥ 1.9.3  云盘：[点击下载](https://www.lanzous.com/b0cvwkj4j)  官网：[https://desktop.telegram.org](https://desktop.telegram.org)）
 
-- Web：[http://web.telegram.org](http://web.telegram.org)
+- 官网Web：[http://web.telegram.org](http://web.telegram.org)
 
 ### 解锁**（两种方法）**
 
