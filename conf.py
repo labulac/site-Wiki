@@ -23,10 +23,10 @@ for_manual_build_trigger = 1
 # 站点设置
 site_name = "LABULAC'S BLOG"
 site_logo = "${static_prefix}android-chrome-512x512.png"
-site_build_date = "2017-06-29T12:00+08:00"
+site_build_date = "2019-02-22T12:00+08:00"
 author = "D0raemon"
 email = "vector051545@gmail.com"
-author_homepage = "https://www.imalan.cn"
+author_homepage = "https://github.com/labulac"
 description = "labulac的blog站点"
 key_words = ['Maverick', 'labulac', 'Galileo', 'blog','D0raemon']
 language = 'zh-CN'
@@ -43,29 +43,14 @@ valine = {
 
 external_links = [
     {
-        "name": "TRIPLE NULL",
-        "url": "https://www.imalan.cn",
-        "brief": "三是虚指。至于是哪三无，我唔知。"
-    },
-    {
-        "name": "BLOG",
-        "url": "https://blog.imalan.cn",
-        "brief": "熊猫小A的博客。隶属于「三无计划」。"
-    },
-    {
-        "name": "LAB",
-        "url": "https://lab.imalan.cn",
-        "brief": "熊猫小A的实验室。隶属于「三无计划」。"
-    },
-    {
         "name": "GITHUB",
-        "url": "https://github.com/AlanDecode",
-        "brief": "My GitHub"
+        "url": "https://github.com/labulac",
+        "brief": "D0raemon的GitHub"
     },
     {
         "name": "CHANNEL",
-        "url": "https://t.me/triple_null",
-        "brief": "熊猫小A的广播。隶属于「三无计划」。"
+        "url": "https://t.me/labu1ac",
+        "brief": "D0raemon的telegram"
     }
 ]
 nav = [
@@ -88,19 +73,9 @@ nav = [
 
 social_links = [
     {
-        "name": "Twitter",
-        "url": "https://twitter.com/AlanDecode",
-        "icon": "gi gi-twitter"
-    },
-    {
         "name": "GitHub",
-        "url": "https://github.com/AlanDecode",
+        "url": "https://github.com/labulac",
         "icon": "gi gi-github"
-    },
-    {
-        "name": "Weibo",
-        "url": "https://weibo.com/5245109677/",
-        "icon": "gi gi-weibo"
     }
 ]
 
