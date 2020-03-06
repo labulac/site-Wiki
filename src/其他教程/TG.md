@@ -17,7 +17,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 ### 介绍
 
-![](https://i.loli.net/2020/02/23/Fzcyv6MTreIHg8P.jpg)
+<img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:50%;" />
 
 ### 准备
 
