@@ -20,4 +20,4 @@ tags:
 
 邮件：vector051545@gmail.com
 
-Telegram：[AlanDecode](https://t.me/labu1ac)
+Telegram：[D0raemon](https://t.me/labu1ac)
