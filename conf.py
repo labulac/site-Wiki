@@ -21,14 +21,14 @@ category_by_folder = True
 for_manual_build_trigger = 1
 
 # 站点设置
-site_name = "無知識 | 三無計劃"
+site_name = "LABULAC'S BLOG"
 site_logo = "${static_prefix}android-chrome-512x512.png"
 site_build_date = "2017-06-29T12:00+08:00"
-author = "熊猫小A"
-email = "hi@imalan.cn"
+author = "D0raemon"
+email = "vector051545@gmail.com"
 author_homepage = "https://www.imalan.cn"
-description = "熊猫小A的Wiki站点"
-key_words = ['Maverick', '熊猫小A', 'Galileo', 'wiki']
+description = "labulac的blog站点"
+key_words = ['Maverick', 'labulac', 'Galileo', 'blog','D0raemon']
 language = 'zh-CN'
 
 valine = {
@@ -70,17 +70,17 @@ external_links = [
 ]
 nav = [
     {
-        "name": "HOME",
+        "name": "首页",
         "url": "${site_prefix}",
         "target": "_self"
     },
     {
-        "name": "ARCHIVES",
+        "name": "历史归档",
         "url": "${site_prefix}archives/",
         "target": "_self"
     },
     {
-        "name": "ABOUT",
+        "name": "关于",
         "url": "${site_prefix}about/",
         "target": "_self"
     }
