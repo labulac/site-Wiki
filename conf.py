@@ -82,7 +82,7 @@ social_links = [
 head_addon = r'''
 <meta http-equiv="x-dns-prefetch-control" content="on">
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-<link rel="dns-prefetch" href="//blog.labulac.top" />
+
 <link rel="stylesheet" href="${static_prefix}brand_font/embed.css" />
 <style>.brand{font-family:FZCuJinLFW,serif;font-weight: normal!important;}</style>
 <meta name="apple-mobile-web-app-capable" content="yes">
