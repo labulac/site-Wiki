@@ -19,6 +19,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>http://blog.labulac.top/archives/telegram/</loc>
+    <lastmod>2020-02-15</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</loc>
     <lastmod>2020-02-13</lastmod>
     <changefreq>always</changefreq>
@@ -208,14 +215,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>http://blog.labulac.top/archives/Windows 上安装 Hexo/</loc>
+    <loc>http://blog.labulac.top/archives/Ubuntu 更改下载、视频等默认文件夹存放位置/</loc>
     <lastmod>2018-05-04</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
 </url>
 
 <url>
-    <loc>http://blog.labulac.top/archives/Ubuntu 更改下载、视频等默认文件夹存放位置/</loc>
+    <loc>http://blog.labulac.top/archives/Windows 上安装 Hexo/</loc>
     <lastmod>2018-05-04</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
@@ -264,20 +271,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-    <loc>http://blog.labulac.top/archives/部署 Typecho/</loc>
-    <lastmod>2018-04-28</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>http://blog.labulac.top/archives/Hexo 环境部署与发布/</loc>
-    <lastmod>2018-04-28</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
     <loc>http://blog.labulac.top/archives/Ubuntu 装机配置/</loc>
     <lastmod>2018-04-28</lastmod>
     <changefreq>always</changefreq>
@@ -307,6 +300,20 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
     <loc>http://blog.labulac.top/archives/Windows 装机配置/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>http://blog.labulac.top/archives/部署 Typecho/</loc>
+    <lastmod>2018-04-28</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
+    <loc>http://blog.labulac.top/archives/Hexo 环境部署与发布/</loc>
     <lastmod>2018-04-28</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>

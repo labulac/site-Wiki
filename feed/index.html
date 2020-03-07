@@ -1,37 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>無知識 | 三無計劃</title><link>http://blog.labulac.top/</link><description>熊猫小A的Wiki站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>無知識 | 三無計劃</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Fri, 06 Mar 2020 15:07:20 +0806</lastBuildDate><pubDate>Fri, 06 Mar 2020 15:07:20 +0806</pubDate><item><title>Windows 实现有线 + Wifi 同时上网（分管内外网）</title><link>http://blog.labulac.top/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</link><description>&lt;p&gt;现在的笔记本大多是双网卡，一个有线一个无线。若同时连上有线与 Wifi，Windows 优先使用有线连接。有时我们需要两者皆能联网，例如我的场景：Wifi 连接实验室内网，有线连接校园网，方便挂 PT。那么可按本文操作如下。&lt;/p&gt;
-&lt;p&gt;首先连接有线与无线，在 CMD 管理员模式中输出当前路由表：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;route print&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;顶部两行以 0.0.0.0 开头的路由即分别是有线与无线连接，注意最后一项「跃点数」，数值越低优先级越高。之所以不能在使用有线时同时使用 WiFi 就是由于这两条路由打架，系统按照跃点数选择了有线连接：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;网络目标    网络掩码     网关            接口               跃点数
-0.0.0.0    0.0.0.0    172.17.104.1    172.17.105.76     26
-0.0.0.0    0.0.0.0    192.168.2.1     192.168.2.102     35&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;要做的是删除其中一条，并重新添加为合理的路由形式。本文中保留有线连接不动（172.17.x.x）,调整 Wifi 连接（192.168.x.x）。&lt;/p&gt;
-&lt;p&gt;首先记下上面的路由表，然后删除原来的路由：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;route delete 0.0.0.0&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;重新添加有线路由，注意内容要和上面对应&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;route add 0.0.0.0 mask 0.0.0.0  172.17.104.1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;即这个格式：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;route add 网络目标 mask 网络掩码 网关&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;然后添加 WiFi 内网路由，这里认为 192.168.0.0/16（即 192.168.x.x）都属于实验室内网，则子网掩码为 255.255.0.0，网关为之前路由表的结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;route add 192.168.0.0 mask 255.255.0.0 192.168.2.1&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;即可。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;大多数情况下网关地址不会轻易改变，因此可以将以上流程写成批处理文件：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;%1&lt;/span&gt; mshta vbscript:CreateObject(&lt;span class="s2"&gt;&amp;quot;Shell.Application&amp;quot;&lt;/span&gt;).ShellExecute(&lt;span class="s2"&gt;&amp;quot;cmd.exe&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;/c &lt;/span&gt;&lt;span class="nv"&gt;%~s0&lt;/span&gt;&lt;span class="s2"&gt; ::&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;,&lt;span class="s2"&gt;&amp;quot;runas&amp;quot;&lt;/span&gt;,1)(window.close)&lt;span class="p"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="k"&gt;exit&lt;/span&gt;
-route delete 0.0.0.0
-route add 0.0.0.0 mask 0.0.0.0  172.17.104.1
-route add 192.168.0.0 mask 255.255.0.0 192.168.2.1
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;其中第一行是请求管理员权限。&lt;/p&gt;
-&lt;p&gt;网络盛传的把以上路由都添加为永久路由的方法不推荐，因为如此的话重启后也不会变回正常状态，可能影响电脑在别处联网。最好保存为批处理，在合适的时候运行一下即可，若有不对重启即可恢复原本状态。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/Windows 实现有线 + Wifi 同时上网（分管内外网）/</guid><pubDate>Mon, 26 Aug 2019 09:14:00 +0806</pubDate></item><item><title>使用 Grid-Stride Loop 复用 CUDA 线程</title><link>http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</link><description>&lt;p&gt;在阅读 CUDA 文档的过程中看到这一篇博文：&lt;a href="https://devblogs.nvidia.com/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/"&gt;CUDA Pro Tip: Write Flexible Kernels with Grid-Stride Loops&lt;/a&gt;，觉得是很不错的思想（技巧），因此记录下来，并且附上一些验证数据。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 02:03:05 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 02:03:05 +0806</pubDate><item><title>使用 Grid-Stride Loop 复用 CUDA 线程</title><link>http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</link><description>&lt;p&gt;在阅读 CUDA 文档的过程中看到这一篇博文：&lt;a href="https://devblogs.nvidia.com/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/"&gt;CUDA Pro Tip: Write Flexible Kernels with Grid-Stride Loops&lt;/a&gt;，觉得是很不错的思想（技巧），因此记录下来，并且附上一些验证数据。&lt;/p&gt;
 &lt;h3&gt;In theory&lt;/h3&gt;
 &lt;p&gt;问题起源：一般使用 CUDA 并行计算时，总使用一个线程对应一块数据，例如计算两向量之和：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// device code to compute c = a + b;&lt;/span&gt;
@@ -136,7 +104,7 @@ Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)&lt;/cod
 &lt;p&gt;可见当 ARRAYSIZE 较大时，两种方法性能有可观的差距。当然，这个测试只是理论上的，实际应用中不可能只用 10 个 Block 来计算。&lt;/p&gt;
 &lt;p&gt;另外，若将显存大小纳入讨论则情况会稍有不同。向量相加这个例子中需要为相加的两个向量以及存储结果的一个向量在 GPU 上分配显存，有时会遇到这样的情况：线程还没用完，显存先用完了。这种情况与算法相关，并不是所有的程序都需要这么巨大的显存量，但需要巨大线程数的场景比比皆是。&lt;/p&gt;
 &lt;p&gt;另外，如何将其扩展到高维 Tensor 还有待思考。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</guid><pubDate>Sun, 29 Sep 2019 00:00:00 +0806</pubDate></item><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</guid><pubDate>Sun, 29 Sep 2019 00:00:00 +0806</pubDate></item><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;之前可以在 Windows 主机内通过 Clash 或者其它软件开启一个本地代理，并允许通过 LAN 连接，来实现 WSL 终端魔法上网，经由 WSL 2 的更改后就需要加上获取 Windows 主机 IP 这一步。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 获取主机 IP&lt;/span&gt;
 &lt;span class="c1"&gt;# 主机 IP 保存在 /etc/resolv.conf 中&lt;/span&gt;
@@ -152,7 +120,7 @@ Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)&lt;/cod
 &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;setss&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;export https_proxy=&amp;quot;http://${hostip}:8888&amp;quot;;export http_proxy=&amp;quot;http://${hostip}:8888&amp;quot;;export all_proxy=&amp;quot;socks5://${hostip}:8889&amp;quot;;&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;之后就可以在 WSL 2 中使用 &lt;code&gt;setss&lt;/code&gt; 设置终端代理。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</guid><pubDate>Thu, 24 Oct 2019 16:30:00 +0806</pubDate></item><item><title>Marching Cubes 算法提取等值面</title><link>http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</link><description>&lt;p&gt;不失一般性，以抽取 0 等值面举例，假设面一侧为正值，另一侧为负值。则 Marching Cubes 算法总体上通过两个步骤建立这个等值面的 mesh 模型：&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</guid><pubDate>Thu, 24 Oct 2019 16:30:00 +0806</pubDate></item><item><title>Marching Cubes 算法提取等值面</title><link>http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</link><description>&lt;p&gt;不失一般性，以抽取 0 等值面举例，假设面一侧为正值，另一侧为负值。则 Marching Cubes 算法总体上通过两个步骤建立这个等值面的 mesh 模型：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;估计每个 cell 内的三角面片数量与连接方式（拓扑结构）&lt;/li&gt;
 &lt;li&gt;计算确定个面片的每个顶点的具体位置&lt;/li&gt;
@@ -163,14 +131,14 @@ Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)&lt;/cod
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="581" data-height="304" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/cf8912ad3cd96f93f718ee2aa3864674.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;图中黄色背景的代表 cell 内只有一个连续面片的情况；其它则代表有多个面片的情况。&lt;/p&gt;
 &lt;p&gt;得到拓扑结构后，对每条包含 vertice 的边进行线性插值，找到 0 值的位置，即可作为 vertice 的坐标，由此完成 mesh 提取。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</guid><pubDate>Fri, 01 Nov 2019 16:06:00 +0806</pubDate></item><item><title>命令行查看 SSL 证书过期时间</title><link>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</guid><pubDate>Fri, 01 Nov 2019 16:06:00 +0806</pubDate></item><item><title>命令行查看 SSL 证书过期时间</title><link>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;openssl x509 -in server.crt -noout -dates&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;输出：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;notBefore=Dec 24 08:04:53 2019 GMT
 notAfter=Mar 23 08:04:53 2020 GMT&lt;/code&gt;&lt;/pre&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</guid><pubDate>Thu, 26 Dec 2019 19:19:00 +0806</pubDate></item><item><title>Python 中的变量传递方式</title><link>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</link><description>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</guid><pubDate>Thu, 26 Dec 2019 19:19:00 +0806</pubDate></item><item><title>Python 中的变量传递方式</title><link>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</link><description>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
 &lt;h2&gt;Python 中的变量&lt;/h2&gt;
 &lt;p&gt;简而言之，Python 中的变量都是对&lt;strong&gt;实体的引用&lt;/strong&gt;，但并&lt;strong&gt;不是实体本身&lt;/strong&gt;；此外，Python 的函数传参仍然&lt;strong&gt;遵循按值传递&lt;/strong&gt;，结合这两点就能搞明白 Python 的传参行为。&lt;/p&gt;
 &lt;p&gt;先抛开具体的编程语言，如果有以下伪代码：&lt;/p&gt;
@@ -244,7 +212,7 @@ original&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;Python 按值传参&lt;/li&gt;
 &lt;li&gt;警惕对引用进行 re-assign 与通过引用修改对象的区别&lt;/li&gt;
 &lt;/ol&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/variable-pass-paradim-in-python/</guid><pubDate>Thu, 02 Jan 2020 15:20:00 +0806</pubDate></item><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/variable-pass-paradim-in-python/</guid><pubDate>Thu, 02 Jan 2020 15:20:00 +0806</pubDate></item><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -272,7 +240,7 @@ ignored-classes=numpy,torch,cv,cv2&lt;/code&gt;&lt;/pre&gt;
     "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"
 ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个还可以。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</guid><pubDate>Thu, 09 Jan 2020 09:28:00 +0806</pubDate></item><item><title>Linux 使用 WebDAV</title><link>http://blog.labulac.top/archives/using-webdav-on-linux/</link><description>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</guid><pubDate>Thu, 09 Jan 2020 09:28:00 +0806</pubDate></item><item><title>Linux 使用 WebDAV</title><link>http://blog.labulac.top/archives/using-webdav-on-linux/</link><description>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;yum -y install davfs2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其他的比如Ubuntu之类的&lt;/p&gt;
@@ -298,7 +266,7 @@ mount.davfs 你的WebDAV地址 你想要挂载到的目录&lt;/code&gt;&lt;/pre&
 &lt;pre&gt;&lt;code&gt;ignore_dav_header 1&lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
 &lt;p&gt;来自：&lt;a href="https://moe.best/linux-memo/mount-webdav.html"&gt;如何在各个平台下挂载WebDAV&lt;/a&gt;。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/using-webdav-on-linux/</guid><pubDate>Mon, 10 Feb 2020 19:58:00 +0806</pubDate></item><item><title>ffmpeg 常用指令</title><link>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</link><description>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/using-webdav-on-linux/</guid><pubDate>Mon, 10 Feb 2020 19:58:00 +0806</pubDate></item><item><title>ffmpeg 常用指令</title><link>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</link><description>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.flv output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;视频截取：&lt;/strong&gt;&lt;/p&gt;
@@ -329,7 +297,24 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>原生 Telegram 解锁</title><link>http://blog.labulac.top/archives/telegram/</link><description>&lt;h3&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:25%;" /&gt;&lt;/p&gt;
+&lt;h3&gt;准备&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;原生 TG （版本 ≥ 5.1.3  iOS 商店：&lt;a href="https://apps.apple.com/cn/app/telegram-messenger/id686449807"&gt;点击下载&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Telegram Win Desktop （版本 ≥ 1.9.3  云盘：&lt;a href="https://www.lanzous.com/b0cvwkj4j"&gt;点击下载&lt;/a&gt;  官网：&lt;a href="https://desktop.telegram.org"&gt;https://desktop.telegram.org&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;官网Web：&lt;a href="http://web.telegram.org"&gt;http://web.telegram.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;解锁&lt;strong&gt;（两种方法）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Desktop 客户端：&lt;strong&gt;Settings→Privacy and Security→Sensutive content→Disable filtering&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;重启手机客户端&lt;/li&gt;
+&lt;/ol&gt;
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Sat, 15 Feb 2020 20:18:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
@@ -340,4 +325,4 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
-</description><author>hi@imalan.cn (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item></channel></rss>
