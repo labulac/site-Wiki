@@ -17,7 +17,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 ### 介绍
 
-![3qaKWt](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/3qaKWt.png)
+![](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/3qaKWt.png)
 
 ### 准备
 
