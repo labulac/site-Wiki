@@ -55,7 +55,7 @@ external_links = [
 ]
 nav = [
     {
-        "name": "首页",
+        "name": "1首页",
         "url": "${site_prefix}",
         "target": "_self"
     },
