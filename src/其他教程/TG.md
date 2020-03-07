@@ -2,7 +2,7 @@
 layout: post
 title: 原生 Telegram 解锁
 slug: telegram
-date: 2020-02-15 20:18
+date: 2020-03-05 20:18
 status: publish
 author: labulac
 categories: 
@@ -17,7 +17,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 ### 介绍
 
-<img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:25%;" />
+<img src="https://i.loli.net/2020/03/07/V2fbvPOAmkRaZlj.png" alt="V2fbvPOAmkRaZlj" style="zoom:33%;" />
 
 ### 准备
 
