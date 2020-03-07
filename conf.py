@@ -38,7 +38,7 @@ valine = {
     "appKey": "ws5n5WDCDFVg5rhvqPceRiuA",
     "visitor": True,
     "recordIP": True,
-    "placeholder": "谈谈你的看法……"
+    "placeholder": "谈谈你的看法…"
 }
 
 external_links = [
