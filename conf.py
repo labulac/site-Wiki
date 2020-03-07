@@ -82,6 +82,7 @@ social_links = [
 head_addon = r'''
 <meta http-equiv="x-dns-prefetch-control" content="on">
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+<link rel="dns-prefetch" href="//blog.labulac.top" />
 '''
 
 footer_addon = ''
