@@ -1,110 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 02:55:30 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 02:55:30 +0806</pubDate><item><title>使用 Grid-Stride Loop 复用 CUDA 线程</title><link>http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</link><description>&lt;p&gt;在阅读 CUDA 文档的过程中看到这一篇博文：&lt;a href="https://devblogs.nvidia.com/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/"&gt;CUDA Pro Tip: Write Flexible Kernels with Grid-Stride Loops&lt;/a&gt;，觉得是很不错的思想（技巧），因此记录下来，并且附上一些验证数据。&lt;/p&gt;
-&lt;h3&gt;In theory&lt;/h3&gt;
-&lt;p&gt;问题起源：一般使用 CUDA 并行计算时，总使用一个线程对应一块数据，例如计算两向量之和：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// device code to compute c = a + b;&lt;/span&gt;
-&lt;span class="c1"&gt;// this method assumes we have enough threads to do the computation&lt;/span&gt;
-&lt;span class="c1"&gt;// enough means larger than the size of array a, b and c&lt;/span&gt;
-&lt;span class="n"&gt;__global__&lt;/span&gt;
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;addArray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// assume we have 1k elements to compute, in this way&lt;/span&gt;
-    &lt;span class="c1"&gt;// thread 0 is responsible for c[0] = a[0] + b[0]&lt;/span&gt;
-    &lt;span class="c1"&gt;// thread 1 is responsible for c[1] = a[1] + b[1]&lt;/span&gt;
-    &lt;span class="c1"&gt;// and so on&lt;/span&gt;
-    &lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;blockIdx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;blockDim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;threadIdx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="cp"&gt;#define ARRAYSIZE 1000000&lt;/span&gt;
-&lt;span class="cp"&gt;#define BLOCKSIZE 1024  &lt;/span&gt;&lt;span class="c1"&gt;// can be any size, better be multiple of 32&lt;/span&gt;
-
-&lt;span class="n"&gt;__host__&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// ...&lt;/span&gt;
-    &lt;span class="c1"&gt;// calculate the minmal number of blocks to cover all data&lt;/span&gt;
-    &lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;numBlocks&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ARRAYSIZE&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;BLOCKSIZE&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="n"&gt;BLOCKSIZE&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;addArray&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;numBlocks&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;BLOCKSIZE&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ARRAYSIZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="c1"&gt;// ...&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;如我们所知，CUDA 中线程组织结构从高到低分为 Grid、Block、Warp 三层，这三层中，每一层都有自己能容纳的最大线程数量，例如在我的设备（1080Ti）上，每个 Block 最多容纳 1024 个线程，每个 Warp 固定是 32 个线程，而每个 Grid 能容纳的数量就比较大了（2147483647, 65535, 65535）。同时还有一个条件，每个 multiprocessor 最大容纳 2048 个线程。总而言之，GPU 虽然能提供大量的线程，但并不是无限的。&lt;/p&gt;
-&lt;p&gt;在不讨论显存大小的前提下，总可能出现这样的情况：程序需要的线程数量大于 GPU 可以提供的线程数量。此时上面的代码就不行了，但下面这种处理方式就可以适应：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// another version to compute c = a + b&lt;/span&gt;
-&lt;span class="c1"&gt;// this uses grid loop to reuse some threads(if needed)&lt;/span&gt;
-&lt;span class="n"&gt;__global__&lt;/span&gt;
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;addArray_gird_loop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// total number of threads in one grid&lt;/span&gt;
-    &lt;span class="c1"&gt;// which is accessible to one kernel&lt;/span&gt;
-    &lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;stride&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;blockDim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;gridDim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;blockIdx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;blockDim&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;threadIdx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-
-    &lt;span class="c1"&gt;// compute using the whole grid at once&lt;/span&gt;
-    &lt;span class="c1"&gt;// the reuse the threads in the same grid&lt;/span&gt;
-    &lt;span class="c1"&gt;// assume we have 1k elements to compute, and a stride of 100&lt;/span&gt;
-    &lt;span class="c1"&gt;// thread 0 is responsible for c[0] = a[0] + b[0]&lt;/span&gt;
-    &lt;span class="c1"&gt;//                             c[100] = a[100] + b[100]...&lt;/span&gt;
-    &lt;span class="c1"&gt;// thread 1 is responsible for c[1] = a[1] + b[1]&lt;/span&gt;
-    &lt;span class="c1"&gt;//                             c[101] = a[101] + b[101]...&lt;/span&gt;
-    &lt;span class="c1"&gt;// and so on&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;stride&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-        &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-
-&lt;span class="cp"&gt;#define ARRAYSIZE 1000000&lt;/span&gt;
-&lt;span class="cp"&gt;#define BLOCKSIZE 1024  &lt;/span&gt;&lt;span class="c1"&gt;// can be any size, better be multiple of 32&lt;/span&gt;
-&lt;span class="cp"&gt;#define GRIDSIZE 10  &lt;/span&gt;&lt;span class="c1"&gt;// can be any size, better be multipel of multiprocessor count&lt;/span&gt;
-
-&lt;span class="n"&gt;__host__&lt;/span&gt;
-&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="c1"&gt;// ...&lt;/span&gt;
-    &lt;span class="n"&gt;addArray_gird_loop&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/span&gt;&lt;span class="n"&gt;numBlocks&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;BLOCKSIZE&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ARRAYSIZE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;B&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;C&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
-    &lt;span class="c1"&gt;// ...&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;在这种实现中，每个线程并不只负责一块数据，而是负责从 index 开始，stride 为步长的一组数据。在 kernel 中每个 for 循环的步长（Stride）刚好是一个 Grid 的大小，因此称作（Grid-Stride Loop）。&lt;/p&gt;
-&lt;p&gt;这种实现的特征是 Grid 的大小可以是任意的，因此解决了「线程不够用」的问题。应该注意到，当 Grid 的大小足够大时（大于等于上一种方法计算出的 &lt;code&gt;numBlocks&lt;/code&gt;），这种方法就退化到第一种方法。&lt;/p&gt;
-&lt;p&gt;另外还需要注意到，当 &lt;code&gt;GRIDSIZE&lt;/code&gt; 与 &lt;code&gt;BLOCKSIZE&lt;/code&gt; 都取 1 时，GPU 里实际上只有一个线程在跑，于是退化为串行程序。&lt;/p&gt;
-&lt;p&gt;文首提到的文章总结了这种思路的几个好处：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;伸缩性与线程复用&lt;/strong&gt;。可扩展性是指，这种方法在理论上可以支持任意规模的并行计算，而不受设备提供的最大线程数限制；另外这种实现允许我们采用更合理的 &lt;code&gt;GRIDSIZE&lt;/code&gt;，比如常推荐的，使用 multiprocessor 数量的倍数。线程复用则可以帮助程序省去线程启动与销毁的开销。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;易于调试&lt;/strong&gt;。如上文所述，当 &lt;code&gt;GRIDSIZE&lt;/code&gt; 与 &lt;code&gt;BLOCKSIZE&lt;/code&gt; 都取 1 时程序实际退化为串行程序，这为调试提供了方便（例如在 kernel 中使用 printf 可以得到顺序的结果）。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;可移植性与可读性&lt;/strong&gt;。这种的写法可以轻易地修改为 CPU 代码，另外还有类似 &lt;a href="https://devblogs.nvidia.com/parallelforall/simple-portable-parallel-c-hemi-2/"&gt;Hemi&lt;/a&gt; 这样的库专门为 Grid-Stride Loop 提供支持，带来了 C++ 11 风格的循环语法：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;HEMI_LAUNCHABLE&lt;/span&gt;
-&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;addArray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="nl"&gt;i&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hemi&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="n"&gt;grid_stride_range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
-      &lt;span class="n"&gt;c&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;In real world&lt;/h3&gt;
-&lt;p&gt;理论上说 Grid-Stride Loop 一切都很美好，但是由于每个线程要进行循环，想必会影响性能，这里我给出自己的测试结果。&lt;/p&gt;
-&lt;p&gt;测试设备：GeForce GTX 1080Ti&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CUDA Driver Version / Runtime Version          9.0 / 9.0
-CUDA Capability Major/Minor version number:    6.1
-Maximum number of threads per multiprocessor:  2048
-Maximum number of threads per block:           1024
-Max dimension size of a thread block (x,y,z): (1024, 1024, 64)
-Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;首先看不使用 Grid-Stride Loop（GS Loop） 的方法中 &lt;code&gt;GRIDSIZE&lt;/code&gt; 和时间相对 ARRAYSIZE 的变化：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="721" data-height="398" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/6d25c3996e10cb3f76025eb9d2c034a0.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;固定 &lt;code&gt;GRIDSIZE=10&lt;/code&gt;，使用 Grid-Stride Loop 的方法：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="721" data-height="373" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/ac92e89173d7781e4c52292871b26a19.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;直观对比两种方法用时：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="724" data-height="399" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/d1578d85e5da708987b7c8254075a43e.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;可见当 ARRAYSIZE 较大时，两种方法性能有可观的差距。当然，这个测试只是理论上的，实际应用中不可能只用 10 个 Block 来计算。&lt;/p&gt;
-&lt;p&gt;另外，若将显存大小纳入讨论则情况会稍有不同。向量相加这个例子中需要为相加的两个向量以及存储结果的一个向量在 GPU 上分配显存，有时会遇到这样的情况：线程还没用完，显存先用完了。这种情况与算法相关，并不是所有的程序都需要这么巨大的显存量，但需要巨大线程数的场景比比皆是。&lt;/p&gt;
-&lt;p&gt;另外，如何将其扩展到高维 Tensor 还有待思考。&lt;/p&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</guid><pubDate>Sun, 29 Sep 2019 00:00:00 +0806</pubDate></item><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 04:00:35 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 04:00:35 +0806</pubDate><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;之前可以在 Windows 主机内通过 Clash 或者其它软件开启一个本地代理，并允许通过 LAN 连接，来实现 WSL 终端魔法上网，经由 WSL 2 的更改后就需要加上获取 Windows 主机 IP 这一步。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 获取主机 IP&lt;/span&gt;
 &lt;span class="c1"&gt;# 主机 IP 保存在 /etc/resolv.conf 中&lt;/span&gt;
@@ -309,7 +204,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
 </description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item><item><title>原生 Telegram 解锁</title><link>http://blog.labulac.top/archives/telegram/</link><description>&lt;h3&gt;介绍&lt;/h3&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="232" data-height="206" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/3qaKWt.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;h3&gt;准备&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;原生 TG （版本 ≥ 5.1.3  iOS 商店：&lt;a href="https://apps.apple.com/cn/app/telegram-messenger/id686449807"&gt;点击下载&lt;/a&gt;）&lt;/p&gt;
@@ -325,4 +220,18 @@ file input3.mp4
 &lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;重启手机客户端&lt;/li&gt;
 &lt;/ol&gt;
-</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Thu, 05 Mar 2020 20:18:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Thu, 05 Mar 2020 20:18:00 +0806</pubDate></item><item><title>“您不能使用以点“.”开头的名称 解决方法</title><link>http://blog.labulac.top/archives/MacOS/</link><description>&lt;h3&gt;描述&lt;/h3&gt;
+&lt;p&gt;遇到这样的问题：&lt;/p&gt;
+&lt;p&gt;mac “您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="836" data-height="294" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/NgQ0yL.png" alt="NgQ0yL" /&gt;&lt;figcaption&gt;NgQ0yL&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3&gt;解决&lt;/h3&gt;
+&lt;p&gt;文件最前面带上.就会变成隐藏文件，系统默认不显示隐藏文件，所以你必须开启显示隐藏文件才能把文件命名为隐藏文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;显示隐藏文件：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;打开『终端』这个程序，输入以下:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;回车执行。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;隐藏隐藏文件：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;打开『终端』这个程序，输入以下:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles FALSE ; killall Finder&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;回车执行。&lt;/p&gt;
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/MacOS/</guid><pubDate>Sat, 07 Mar 2020 11:54:00 +0806</pubDate></item></channel></rss>
