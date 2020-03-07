@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 04:06:59 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 04:06:59 +0806</pubDate><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 04:38:02 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 04:38:02 +0806</pubDate><item><title>WSL 2 中配置终端走主机代理</title><link>http://blog.labulac.top/archives/WSL 2 中配置终端走主机代理/</link><description>&lt;p&gt;微软在 WSL 2 中更改了 Linux 子系统与 Windows 主机的通信方式，以往通过 localhost 即可互相访问，现在则不行，具体内容见 &lt;a href="https://docs.microsoft.com/zh-cn/windows/wsl/wsl2-ux-changes"&gt;WSL 1 与 WSL 2 的用户体验差异&lt;/a&gt;。&lt;/p&gt;
 &lt;p&gt;之前可以在 Windows 主机内通过 Clash 或者其它软件开启一个本地代理，并允许通过 LAN 连接，来实现 WSL 终端魔法上网，经由 WSL 2 的更改后就需要加上获取 Windows 主机 IP 这一步。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 获取主机 IP&lt;/span&gt;
 &lt;span class="c1"&gt;# 主机 IP 保存在 /etc/resolv.conf 中&lt;/span&gt;
@@ -222,17 +222,19 @@ file input3.mp4
 &lt;/ol&gt;
 </description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Thu, 05 Mar 2020 20:18:00 +0806</pubDate></item><item><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><link>http://blog.labulac.top/archives/MacOS/</link><description>&lt;h3&gt;描述&lt;/h3&gt;
 &lt;p&gt;遇到这样的问题：&lt;/p&gt;
-&lt;p&gt;mac “您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
+&lt;p&gt;提示：“您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="836" data-height="294" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/NgQ0yL.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3&gt;解决&lt;/h3&gt;
 &lt;p&gt;文件最前面带上.就会变成隐藏文件，系统默认不显示隐藏文件，所以你必须开启显示隐藏文件才能把文件命名为隐藏文件。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;显示隐藏文件：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;打开『终端』这个程序，输入以下:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;defaults write com.apple.finder AppleShowAllFiles -boolean &lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; killall Finder
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;回车执行。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;隐藏隐藏文件：&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;打开『终端』这个程序，输入以下:&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;defaults write com.apple.finder AppleShowAllFiles FALSE ; killall Finder&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;defaults write com.apple.finder AppleShowAllFiles FALSE &lt;span class="p"&gt;;&lt;/span&gt; killall Finder
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;回车执行。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
 </description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/MacOS/</guid><pubDate>Sat, 07 Mar 2020 11:54:00 +0806</pubDate></item></channel></rss>
