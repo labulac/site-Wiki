@@ -12,7 +12,7 @@ tags:
 
 日常使用的一些小随笔，希望能帮到大家!
 
-本项目基于 [AlanDecode/site-Wiki](https://github.com/AlanDecode/site-Wiki) 
+本项目基于 [site-Wiki](https://github.com/AlanDecode/site-Wiki) | [🏄‍ Maverick](https://alandecode.github.io/Maverick/) | [Kepler](https://github.com/AlanDecode/Maverick-Theme-Kepler) 
 
 站在巨人的肩膀上！鸣谢！
 

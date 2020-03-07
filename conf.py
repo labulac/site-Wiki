@@ -99,9 +99,6 @@ head_addon = r'''
 <meta name="baidu-site-verification" content="Or6aUYr0De" />
 '''
 
-footer_addon = r'''
-<a no-style href="https://alandecode.github.io/Maverick/" target="_blank">🏄‍ Maverick</a> | 
-<a no-style href="https://github.com/AlanDecode/Maverick-Theme-Kepler" target="_blank">Kepler</a>
-'''
+footer_addon = ''
 
 body_addon = ''
