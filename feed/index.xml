@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 02:03:05 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 02:03:05 +0806</pubDate><item><title>使用 Grid-Stride Loop 复用 CUDA 线程</title><link>http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</link><description>&lt;p&gt;在阅读 CUDA 文档的过程中看到这一篇博文：&lt;a href="https://devblogs.nvidia.com/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/"&gt;CUDA Pro Tip: Write Flexible Kernels with Grid-Stride Loops&lt;/a&gt;，觉得是很不错的思想（技巧），因此记录下来，并且附上一些验证数据。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 02:38:57 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 02:38:57 +0806</pubDate><item><title>使用 Grid-Stride Loop 复用 CUDA 线程</title><link>http://blog.labulac.top/archives/使用 Grid-Stride Loop 复用 CUDA 线程/</link><description>&lt;p&gt;在阅读 CUDA 文档的过程中看到这一篇博文：&lt;a href="https://devblogs.nvidia.com/cuda-pro-tip-write-flexible-kernels-grid-stride-loops/"&gt;CUDA Pro Tip: Write Flexible Kernels with Grid-Stride Loops&lt;/a&gt;，觉得是很不错的思想（技巧），因此记录下来，并且附上一些验证数据。&lt;/p&gt;
 &lt;h3&gt;In theory&lt;/h3&gt;
 &lt;p&gt;问题起源：一般使用 CUDA 并行计算时，总使用一个线程对应一块数据，例如计算两向量之和：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// device code to compute c = a + b;&lt;/span&gt;
@@ -297,8 +297,19 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>原生 Telegram 解锁</title><link>http://blog.labulac.top/archives/telegram/</link><description>&lt;h3&gt;介绍&lt;/h3&gt;
-&lt;p&gt;&lt;img src="https://i.loli.net/2020/03/06/H1zRKfnsGiJXwDW.png" alt="H1zRKfnsGiJXwDW" style="zoom:25%;" /&gt;&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</guid><pubDate>Thu, 13 Feb 2020 10:38:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl req -new -key server.key -out server.csr
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;根据提示输入各项参数。Common Name 这一项可以填通配符域名。&lt;/p&gt;
+&lt;p&gt;使用私钥签名生成证书 server.crt：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
+</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item><item><title>原生 Telegram 解锁</title><link>http://blog.labulac.top/archives/telegram/</link><description>&lt;h3&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;img src="https://i.loli.net/2020/03/07/V2fbvPOAmkRaZlj.png" alt="V2fbvPOAmkRaZlj" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;h3&gt;准备&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;原生 TG （版本 ≥ 5.1.3  iOS 商店：&lt;a href="https://apps.apple.com/cn/app/telegram-messenger/id686449807"&gt;点击下载&lt;/a&gt;）&lt;/p&gt;
@@ -314,15 +325,4 @@ file input3.mp4
 &lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;重启手机客户端&lt;/li&gt;
 &lt;/ol&gt;
-</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Sat, 15 Feb 2020 20:18:00 +0806</pubDate></item><item><title>使用 openssl 生成自签名证书</title><link>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</link><description>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl req -new -key server.key -out server.csr
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;根据提示输入各项参数。Common Name 这一项可以填通配符域名。&lt;/p&gt;
-&lt;p&gt;使用私钥签名生成证书 server.crt：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</guid><pubDate>Sun, 01 Mar 2020 13:15:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram/</guid><pubDate>Thu, 05 Mar 2020 20:18:00 +0806</pubDate></item></channel></rss>
