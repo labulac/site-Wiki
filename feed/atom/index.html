@@ -1,23 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-07T13:12:05.645248+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</id><title>Marching Cubes 算法提取等值面</title><updated>2020-03-07T13:12:05.645535+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;不失一般性，以抽取 0 等值面举例，假设面一侧为正值，另一侧为负值。则 Marching Cubes 算法总体上通过两个步骤建立这个等值面的 mesh 模型：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;估计每个 cell 内的三角面片数量与连接方式（拓扑结构）&lt;/li&gt;
-&lt;li&gt;计算确定个面片的每个顶点的具体位置&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;&lt;p&gt;这里的 cell 区别于 voxel。voxel 可认为是对三维场的采样与离散，采样点位于 voxel 中心，这些采样点作为顶点则构成了 cell。即 cell 是以采样点为顶点的三维网格。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;具体而言，对每一个 cell，首先确定这个 cell 内部面片的拓扑结构。即通过判断这个 cell 各顶点的符号来判断 cell 哪部分处于面内。当相邻两顶点符号改变时，表名这条边穿过了面，因此该边上必定有一个面片顶点（vertice）。这样，每个顶点都有两种情况：面内、面外，总共就有2^8 = 256 中情况，这些情况可归类为 15 中基本情况：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="581" data-height="304" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/cf8912ad3cd96f93f718ee2aa3864674.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;图中黄色背景的代表 cell 内只有一个连续面片的情况；其它则代表有多个面片的情况。&lt;/p&gt;
-&lt;p&gt;得到拓扑结构后，对每条包含 vertice 的边进行线性插值，找到 0 值的位置，即可作为 vertice 的坐标，由此完成 mesh 提取。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/" rel="alternate"/><published>2019-11-01T16:06:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</id><title>命令行查看 SSL 证书过期时间</title><updated>2020-03-07T13:12:05.645512+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;命令行：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-07T13:18:16.249860+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</id><title>命令行查看 SSL 证书过期时间</title><updated>2020-03-07T13:18:16.250147+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;命令行：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;openssl x509 -in server.crt -noout -dates&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;输出：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;notBefore=Dec 24 08:04:53 2019 GMT
 notAfter=Mar 23 08:04:53 2020 GMT&lt;/code&gt;&lt;/pre&gt;
-</content><link href="http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/" rel="alternate"/><published>2019-12-26T19:19:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</id><title>Python 中的变量传递方式</title><updated>2020-03-07T13:12:05.645490+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/" rel="alternate"/><published>2019-12-26T19:19:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</id><title>Python 中的变量传递方式</title><updated>2020-03-07T13:18:16.250125+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
 &lt;h2&gt;Python 中的变量&lt;/h2&gt;
 &lt;p&gt;简而言之，Python 中的变量都是对&lt;strong&gt;实体的引用&lt;/strong&gt;，但并&lt;strong&gt;不是实体本身&lt;/strong&gt;；此外，Python 的函数传参仍然&lt;strong&gt;遵循按值传递&lt;/strong&gt;，结合这两点就能搞明白 Python 的传参行为。&lt;/p&gt;
 &lt;p&gt;先抛开具体的编程语言，如果有以下伪代码：&lt;/p&gt;
@@ -91,7 +80,7 @@ original&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;Python 按值传参&lt;/li&gt;
 &lt;li&gt;警惕对引用进行 re-assign 与通过引用修改对象的区别&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="http://blog.labulac.top/archives/variable-pass-paradim-in-python/" rel="alternate"/><published>2020-01-02T15:20:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-07T13:12:05.645468+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/variable-pass-paradim-in-python/" rel="alternate"/><published>2020-01-02T15:20:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-07T13:18:16.250103+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -119,7 +108,7 @@ ignored-classes=numpy,torch,cv,cv2&lt;/code&gt;&lt;/pre&gt;
     "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"
 ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个还可以。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-07T13:12:05.645446+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-07T13:18:16.250081+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;yum -y install davfs2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其他的比如Ubuntu之类的&lt;/p&gt;
@@ -145,7 +134,7 @@ mount.davfs 你的WebDAV地址 你想要挂载到的目录&lt;/code&gt;&lt;/pre&
 &lt;pre&gt;&lt;code&gt;ignore_dav_header 1&lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
 &lt;p&gt;来自：&lt;a href="https://moe.best/linux-memo/mount-webdav.html"&gt;如何在各个平台下挂载WebDAV&lt;/a&gt;。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-07T13:12:05.645423+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-07T13:18:16.250059+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.flv output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;视频截取：&lt;/strong&gt;&lt;/p&gt;
@@ -176,7 +165,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-07T13:12:05.645399+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-07T13:18:16.250036+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
@@ -187,7 +176,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-07T13:12:05.645374+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-07T13:18:16.250013+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
 &lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;h3&gt;准备&lt;/h3&gt;
 &lt;ul&gt;
@@ -204,7 +193,7 @@ file input3.mp4
 &lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;重启手机客户端&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-07T13:12:05.645347+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-07T13:18:16.249989+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
 &lt;p&gt;遇到这样的问题：&lt;/p&gt;
 &lt;p&gt;提示：“您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="836" data-height="294" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/NgQ0yL.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -221,7 +210,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;回车执行。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-07T13:12:05.645298+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-07T13:18:16.249961+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;Mac 升级系统后发现有些非官方渠道的软件，无法安装&lt;/p&gt;
 &lt;p&gt;同时发现 &lt;strong&gt;安全性与隐私&lt;/strong&gt; 的 &lt;strong&gt;允许从以下位置下载的应用：&lt;/strong&gt; 中的&lt;strong&gt;任何来源&lt;/strong&gt;选项也不见了...&lt;/p&gt;
 &lt;h3&gt;解决办法&lt;/h3&gt;
@@ -233,4 +222,21 @@ file input3.mp4
 &lt;p&gt;点击那个小黄锁，输入密码，选中。&lt;/p&gt;
 &lt;p&gt;然后安装你想要安装的软件 ！&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry></feed>
+</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram4/</id><title>原生 Telegram 解锁</title><updated>2020-03-07T13:18:16.249912+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://github.com/labulac</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
+&lt;h3&gt;准备&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;原生 TG （版本 ≥ 5.1.3  iOS 商店：&lt;a href="https://apps.apple.com/cn/app/telegram-messenger/id686449807"&gt;点击下载&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Telegram Win Desktop （版本 ≥ 1.9.3  云盘：&lt;a href="https://www.lanzous.com/b0cvwkj4j"&gt;点击下载&lt;/a&gt;  官网：&lt;a href="https://desktop.telegram.org"&gt;https://desktop.telegram.org&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;官网Web：&lt;a href="http://web.telegram.org"&gt;http://web.telegram.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;解锁&lt;strong&gt;（两种方法）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Desktop 客户端：&lt;strong&gt;Settings→Privacy and Security→Sensutive content→Disable filtering&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;重启手机客户端&lt;/li&gt;
+&lt;/ol&gt;
+</content><link href="http://blog.labulac.top/archives/telegram4/" rel="alternate"/><published>2020-03-10T20:18:00+08:06</published></entry></feed>

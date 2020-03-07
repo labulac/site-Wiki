@@ -1,16 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 13:12:05 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 13:12:05 +0806</pubDate><item><title>Marching Cubes 算法提取等值面</title><link>http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</link><description>&lt;p&gt;不失一般性，以抽取 0 等值面举例，假设面一侧为正值，另一侧为负值。则 Marching Cubes 算法总体上通过两个步骤建立这个等值面的 mesh 模型：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;估计每个 cell 内的三角面片数量与连接方式（拓扑结构）&lt;/li&gt;
-&lt;li&gt;计算确定个面片的每个顶点的具体位置&lt;/li&gt;
-&lt;/ol&gt;
-&lt;blockquote&gt;&lt;p&gt;这里的 cell 区别于 voxel。voxel 可认为是对三维场的采样与离散，采样点位于 voxel 中心，这些采样点作为顶点则构成了 cell。即 cell 是以采样点为顶点的三维网格。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;具体而言，对每一个 cell，首先确定这个 cell 内部面片的拓扑结构。即通过判断这个 cell 各顶点的符号来判断 cell 哪部分处于面内。当相邻两顶点符号改变时，表名这条边穿过了面，因此该边上必定有一个面片顶点（vertice）。这样，每个顶点都有两种情况：面内、面外，总共就有2^8 = 256 中情况，这些情况可归类为 15 中基本情况：&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="581" data-height="304" src="https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/archives/assets/cf8912ad3cd96f93f718ee2aa3864674.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;图中黄色背景的代表 cell 内只有一个连续面片的情况；其它则代表有多个面片的情况。&lt;/p&gt;
-&lt;p&gt;得到拓扑结构后，对每条包含 vertice 的边进行线性插值，找到 0 值的位置，即可作为 vertice 的坐标，由此完成 mesh 提取。&lt;/p&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/Marching Cubes 算法提取等值面/</guid><pubDate>Fri, 01 Nov 2019 16:06:00 +0806</pubDate></item><item><title>命令行查看 SSL 证书过期时间</title><link>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Sat, 07 Mar 2020 13:18:16 +0806</lastBuildDate><pubDate>Sat, 07 Mar 2020 13:18:16 +0806</pubDate><item><title>命令行查看 SSL 证书过期时间</title><link>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;openssl x509 -in server.crt -noout -dates&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;输出：&lt;/p&gt;
@@ -233,4 +222,21 @@ file input3.mp4
 &lt;p&gt;点击那个小黄锁，输入密码，选中。&lt;/p&gt;
 &lt;p&gt;然后安装你想要安装的软件 ！&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/允许任何安装来源/</guid><pubDate>Sat, 07 Mar 2020 15:44:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/允许任何安装来源/</guid><pubDate>Sat, 07 Mar 2020 15:44:00 +0806</pubDate></item><item><title>原生 Telegram 解锁</title><link>http://blog.labulac.top/archives/telegram4/</link><description>&lt;h3&gt;介绍&lt;/h3&gt;
+&lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
+&lt;h3&gt;准备&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;原生 TG （版本 ≥ 5.1.3  iOS 商店：&lt;a href="https://apps.apple.com/cn/app/telegram-messenger/id686449807"&gt;点击下载&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Telegram Win Desktop （版本 ≥ 1.9.3  云盘：&lt;a href="https://www.lanzous.com/b0cvwkj4j"&gt;点击下载&lt;/a&gt;  官网：&lt;a href="https://desktop.telegram.org"&gt;https://desktop.telegram.org&lt;/a&gt;）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;官网Web：&lt;a href="http://web.telegram.org"&gt;http://web.telegram.org&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;解锁&lt;strong&gt;（两种方法）&lt;/strong&gt;&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Desktop 客户端：&lt;strong&gt;Settings→Privacy and Security→Sensutive content→Disable filtering&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;重启手机客户端&lt;/li&gt;
+&lt;/ol&gt;
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/telegram4/</guid><pubDate>Tue, 10 Mar 2020 20:18:00 +0806</pubDate></item></channel></rss>
