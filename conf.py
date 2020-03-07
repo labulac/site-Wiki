@@ -82,21 +82,6 @@ social_links = [
 head_addon = r'''
 <meta http-equiv="x-dns-prefetch-control" content="on">
 <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-
-<link rel="stylesheet" href="${static_prefix}brand_font/embed.css" />
-<style>.brand{font-family:FZCuJinLFW,serif;font-weight: normal!important;}</style>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" sizes="180x180" href="${static_prefix}apple-touch-icon.png?v=PY43YeeEKx">
-<link rel="icon" type="image/png" sizes="32x32" href="${static_prefix}favicon-32x32.png?v=yyLyaqbyRG">
-<link rel="icon" type="image/png" sizes="16x16" href="${static_prefix}favicon-16x16.png?v=yyLyaqbyRG">
-<link rel="mask-icon" href="${static_prefix}safari-pinned-tab.svg?v=yyLyaqbyRG" color="#505050">
-<link rel="shortcut icon" href="${static_prefix}favicon.ico?v=yyLyaqbyRG">
-<meta name="application-name" content="labulac's blog">
-<meta name="apple-mobile-web-app-title" content="labulac's blog">
-<meta name="msapplication-TileColor" content="#000000">
-<meta name="theme-color" content="#000000">
-<meta name="baidu-site-verification" content="Or6aUYr0De" />
 '''
 
 footer_addon = ''
