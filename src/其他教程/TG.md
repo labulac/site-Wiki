@@ -17,7 +17,7 @@ excerpt: 包括 iOS、Android、Mac、Windows
 
 ### 介绍
 
-![](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/3qaKWt.png)
+<img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" />
 
 ### 准备
 
