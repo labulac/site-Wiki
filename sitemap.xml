@@ -12,6 +12,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+    <loc>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</loc>
+    <lastmod>2020-03-09</lastmod>
+    <changefreq>always</changefreq>
+    <priority>0.5</priority>
+</url>
+
+<url>
     <loc>http://blog.labulac.top/archives/允许任何安装来源/</loc>
     <lastmod>2020-03-07</lastmod>
     <changefreq>always</changefreq>
@@ -27,13 +34,6 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
     <loc>http://blog.labulac.top/archives/telegram/</loc>
-    <lastmod>2020-03-05</lastmod>
-    <changefreq>always</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>http://blog.labulac.top/archives/Text/</loc>
     <lastmod>2020-03-05</lastmod>
     <changefreq>always</changefreq>
     <priority>0.5</priority>
