@@ -54,7 +54,7 @@ sudo open -a /Applications/PlistEdit\ Pro.app ~/Library/Preferences/com.apple.HI
 
 3.删除红框键值下的子键中带有ABC字样的整个键值
 
-![image-20200311095524398](/Users/labulac/Library/Application Support/typora-user-images/image-20200311095524398.png)
+![](https://gitee.com/labulac/pic/raw/master/uPic/A0lUBr.png)
 
 4.删除之后点击保存，如果不能直接保存则可以先将修改的后的文件另存为到桌面上，然后再将文件复制到 ~/Library/Preferences 此处，至此已经修改完成。
 
