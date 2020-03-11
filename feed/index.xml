@@ -1,12 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Mon, 09 Mar 2020 02:46:45 +0806</lastBuildDate><pubDate>Mon, 09 Mar 2020 02:46:45 +0806</pubDate><item><title>命令行查看 SSL 证书过期时间</title><link>http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</link><description>&lt;p&gt;命令行：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;openssl x509 -in server.crt -noout -dates&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;notBefore=Dec 24 08:04:53 2019 GMT
-notAfter=Mar 23 08:04:53 2020 GMT&lt;/code&gt;&lt;/pre&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/命令行查看 SSL 证书过期时间/</guid><pubDate>Thu, 26 Dec 2019 19:19:00 +0806</pubDate></item><item><title>Python 中的变量传递方式</title><link>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</link><description>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Wed, 11 Mar 2020 02:12:41 +0806</lastBuildDate><pubDate>Wed, 11 Mar 2020 02:12:41 +0806</pubDate><item><title>Python 中的变量传递方式</title><link>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</link><description>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
 &lt;h2&gt;Python 中的变量&lt;/h2&gt;
 &lt;p&gt;简而言之，Python 中的变量都是对&lt;strong&gt;实体的引用&lt;/strong&gt;，但并&lt;strong&gt;不是实体本身&lt;/strong&gt;；此外，Python 的函数传参仍然&lt;strong&gt;遵循按值传递&lt;/strong&gt;，结合这两点就能搞明白 Python 的传参行为。&lt;/p&gt;
 &lt;p&gt;先抛开具体的编程语言，如果有以下伪代码：&lt;/p&gt;
@@ -230,4 +223,31 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;unset&lt;/span&gt; all_proxy &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset&lt;/span&gt; ALL_PROXY
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</guid><pubDate>Mon, 09 Mar 2020 10:48:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</guid><pubDate>Mon, 09 Mar 2020 10:48:00 +0806</pubDate></item><item><title>MacOS 删除灰色的ABC输入法</title><link>http://blog.labulac.top/archives/ABC/</link><description>&lt;h3&gt;问题来源&lt;/h3&gt;
+&lt;p&gt;总是很烦ABC输入法，明明不怎么需要&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/GPH9jG.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;又是灰色的，如何删除呢？&lt;/p&gt;
+&lt;h3&gt;解决&lt;/h3&gt;
+&lt;p&gt;1.首先要关闭系统的完整性保护，即关闭SIP，方法是在重启电脑时按住 command + R 进入恢复模式，然后选择实用工具中的 终端，输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;csrutil disable
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;回车，显示成功关闭SIP，之后重启电脑。&lt;/p&gt;
+&lt;p&gt;2.之后打开终端，在命令行输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo open -a /Applications/Xcode.app ~/Library/Preferences/com.apple.HIToolbox.plist
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;回车之后输入密码确认，之后便用Xcode打开了这个配置文件。&lt;/p&gt;
+&lt;p&gt;另：&lt;/p&gt;
+&lt;p&gt;若是使用PlistEdit Pro则输入这个：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo open -a /Applications/PlistEdit&lt;span class="se"&gt;\ &lt;/span&gt;Pro.app ~/Library/Preferences/com.apple.HIToolbox.plist
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;同样输入密码确认，之后便用PlistEdit Pro打开了这个配置文件。&lt;/p&gt;
+&lt;p&gt;3.删除红框键值下的子键中带有ABC字样的整个键值&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="/Users/labulac/Library/Application Support/typora-user-images/image-20200311095524398.png" alt="image-20200311095524398" /&gt;&lt;figcaption&gt;image-20200311095524398&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;4.删除之后点击保存，如果不能直接保存则可以先将修改的后的文件另存为到桌面上，然后再将文件复制到 ~/Library/Preferences 此处，至此已经修改完成。&lt;/p&gt;
+&lt;p&gt;5.下面是将系统完整性保护打开：&lt;/p&gt;
+&lt;p&gt;重启，进入恢复模式，然后输入&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;csrutil &lt;span class="nb"&gt;enable&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;打开系统完整性保护。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ABC/</guid><pubDate>Wed, 11 Mar 2020 09:44:00 +0806</pubDate></item></channel></rss>
