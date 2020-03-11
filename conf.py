@@ -43,6 +43,26 @@ valine = {
 
 external_links = [
     {
+        "name": "HOME",
+        "url": "https://labulac.top",
+        "brief": "D0raemon的导航页"
+    },
+    {
+        "name": "DRIVER",
+        "url": "https://driver.labulac.top",
+        "brief": "D0raemon的云盘"
+    },
+    {
+        "name": "CYDIA",
+        "url": "https://repo.labulac.top",
+        "brief": "D0raemon的越狱源"
+    },
+    {
+        "name": "MUSIC",
+        "url": "https://labulac3.herokuapp.com",
+        "brief": "D0raemon的MUSIC"
+    },
+    {
         "name": "GITHUB",
         "url": "https://github.com/labulac",
         "brief": "D0raemon的GitHub"
