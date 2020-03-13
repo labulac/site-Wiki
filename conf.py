@@ -44,7 +44,7 @@ valine = {
 external_links = [
     {
         "name": "HOME",
-        "url": "https://labulac.top",
+        "url": "https://home.labulac.top",
         "brief": "D0raemon的导航页"
     },
     {
@@ -143,10 +143,12 @@ jQuery(document).ready(function($) {
 }); 
 </script>
 
-<script src="//code.tidio.co/cdykkwfovmclocfai87icmljlygcos1w.js"></script>
+
 
 '''
 
-footer_addon = ''
+footer_addon = r'''
+<script src="//code.tidio.co/cdykkwfovmclocfai87icmljlygcos1w.js"></script>
+'''
 
 body_addon = ''
