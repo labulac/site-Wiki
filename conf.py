@@ -44,7 +44,7 @@ valine = {
 external_links = [
     {
         "name": "HOME",
-        "url": "https://home.labulac.top",
+        "url": "https://labulac.top",
         "brief": "D0raemon的导航页"
     },
     {
