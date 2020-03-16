@@ -20,7 +20,7 @@ excerpt: ABC
 
 总是很烦ABC输入法，明明不怎么需要
 
-![](https://gitee.com/labulac/pic/raw/master/uPic/GPH9jG.png)
+![](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/d1UslK.png)
 
 又是灰色的，如何删除呢？
 
@@ -54,7 +54,7 @@ sudo open -a /Applications/PlistEdit\ Pro.app ~/Library/Preferences/com.apple.HI
 
 3.删除红框键值下的子键中带有ABC字样的整个键值
 
-![](https://gitee.com/labulac/pic/raw/master/uPic/A0lUBr.png)
+![](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/WJHZ3v.png)
 
 4.删除之后点击保存，如果不能直接保存则可以先将修改的后的文件另存为到桌面上，然后再将文件复制到 ~/Library/Preferences 此处，至此已经修改完成。
 
