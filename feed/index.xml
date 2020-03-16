@@ -1,79 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Fri, 13 Mar 2020 13:49:05 +0806</lastBuildDate><pubDate>Fri, 13 Mar 2020 13:49:05 +0806</pubDate><item><title>Python 中的变量传递方式</title><link>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</link><description>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
-&lt;h2&gt;Python 中的变量&lt;/h2&gt;
-&lt;p&gt;简而言之，Python 中的变量都是对&lt;strong&gt;实体的引用&lt;/strong&gt;，但并&lt;strong&gt;不是实体本身&lt;/strong&gt;；此外，Python 的函数传参仍然&lt;strong&gt;遵循按值传递&lt;/strong&gt;，结合这两点就能搞明白 Python 的传参行为。&lt;/p&gt;
-&lt;p&gt;先抛开具体的编程语言，如果有以下伪代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;a=1
-a=2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;多数语言会把这两行解释为：声明一个变量 a，在内存里分配空间，这个空间&lt;strong&gt;就叫 a&lt;/strong&gt;，里面存 1；然后把这个空间里的值更新成 2。&lt;/p&gt;
-&lt;p&gt;但是 Python 中对变量（其实是对象）的处理有所不同。以上两行在 Python 中代表：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;创建一个对象（整数 1），放在内存里，再&lt;strong&gt;创建一个引用，这个引用叫做 a&lt;/strong&gt;，指向之前创建的对象&lt;/li&gt;
-&lt;li&gt;又创建一个对象（整数 2），放在内存里，把 a 指向这个新的对象&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;看到不同了吧？接下来讨论函数传参。&lt;/p&gt;
-&lt;h2&gt;Python 中的传参&lt;/h2&gt;
-&lt;p&gt;在 Python 中的函数传参是依照&lt;strong&gt;值传递&lt;/strong&gt;的；但由于 Python 中的变量都是引用，因此就有了以下这句有点绕的话：&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;Python passes references-to-objects by value (like Java), and everything in Python is an object.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;看以下代码段&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[1]
-[1, 2]
-[1, 2]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;调用 &lt;code&gt;func&lt;/code&gt; 并把 a 传入时，Python 在局部&lt;strong&gt;新建了一个局部的变量 a&lt;/strong&gt;，并把外部 a 的值赋值给了新的变量。由于 a 是引用，新的变量也是引用，都指向内存中的同一个列表对象，因此在函数内部对列表进行的操作也同样可以由外部的 a 观测到。&lt;/p&gt;
-&lt;p&gt;然而，要注意两个陷阱：对引用进行 &lt;strong&gt;re-assign&lt;/strong&gt;；以及对 &lt;strong&gt;immutable 对象&lt;/strong&gt;的处理。&lt;/p&gt;
-&lt;h2&gt;对引用 re-assign&lt;/h2&gt;
-&lt;p&gt;修改以上代码为：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# 注意这里&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[1]
-['a']
-[1]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;为什么函数内对 a 的修改不能被外部的 a 观测到？&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a=['a']&lt;/code&gt; 这行代码并不是通过 a 修改 a 指向的 list，而是在内存中新建了一个列表对象 &lt;code&gt;['a']&lt;/code&gt;，并将函数内部的 a 指向了这个新的对象，并且此后的操作都针对这个新的列表对象；然而由于函数内部的 a 与外部的 a 是两个不同的变量，因此外部的 a 仍然指向之前的 list。这种操作称为 &lt;code&gt;re-assign&lt;/code&gt;，需要与 &lt;code&gt;append&lt;/code&gt; 这种针对对象本身的方法区别开。&lt;/p&gt;
-&lt;h2&gt;immutable 对象的处理&lt;/h2&gt;
-&lt;p&gt;如果不使用列表，而使用字符串：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;changed&amp;#39;&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;original&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;original
-changed
-original&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果理解了前文的要点，那么针对 immutable 对象的处理并不难懂。由于 str 对象是 immutable 的（不可变对象），因此函数内部不能通过 a 修改指向的字符串，&lt;code&gt;a='changed'&lt;/code&gt; 这行代码实际是在进行 re-assign，也就是新建了一个字符串对象 &lt;code&gt;'changed'&lt;/code&gt;，使函数内部的 a 指向这个新的对象。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;总而言之记住三点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Python 中的变量是对象的引用，而不是对象本身&lt;/li&gt;
-&lt;li&gt;Python 按值传参&lt;/li&gt;
-&lt;li&gt;警惕对引用进行 re-assign 与通过引用修改对象的区别&lt;/li&gt;
-&lt;/ol&gt;
-</description><author>vector051545@gmail.com (熊猫小A)</author><guid isPermaLink="true">http://blog.labulac.top/archives/variable-pass-paradim-in-python/</guid><pubDate>Thu, 02 Jan 2020 15:20:00 +0806</pubDate></item><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Mon, 16 Mar 2020 05:15:28 +0806</lastBuildDate><pubDate>Mon, 16 Mar 2020 05:15:28 +0806</pubDate><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -250,4 +176,28 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;打开系统完整性保护。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ABC/</guid><pubDate>Wed, 11 Mar 2020 09:44:00 +0806</pubDate></item></channel></rss>
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/ABC/</guid><pubDate>Wed, 11 Mar 2020 09:44:00 +0806</pubDate></item><item><title>谷歌云密码连接</title><link>http://blog.labulac.top/archives/谷歌云密码连接/</link><description>&lt;h3&gt;问题&lt;/h3&gt;
+&lt;p&gt;新撸的谷歌云通过ssh秘钥连接太麻烦了&lt;/p&gt;
+&lt;p&gt;下面改用密码登陆，方便&lt;/p&gt;
+&lt;h3&gt;解决方法&lt;/h3&gt;
+&lt;p&gt;1.先登入谷歌云打开自带的ssh&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="514" data-height="498" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/Fld588.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2.切换到root角色&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo -i&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.修改SSH配置文件/etc/ssh/sshd_config&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/ssh/sshd_config&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改PermitRootLogin和PasswordAuthentication为yes&lt;/p&gt;
+&lt;p&gt;4.给root用户设置密码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;passwd root&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5.重启SSH服务使修改生效&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;sshd&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;连接&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="1142" data-height="694" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/image-20200316131325472.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
+</description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/谷歌云密码连接/</guid><pubDate>Mon, 16 Mar 2020 13:48:00 +0806</pubDate></item></channel></rss>

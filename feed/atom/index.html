@@ -1,79 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-13T13:49:05.571969+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/variable-pass-paradim-in-python/</id><title>Python 中的变量传递方式</title><updated>2020-03-13T13:49:05.572336+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;之前一直没有仔细思考过这个问题，直到最近用到方才深入了解。其实并不复杂，和 C++ 如出一辙。&lt;/p&gt;
-&lt;h2&gt;Python 中的变量&lt;/h2&gt;
-&lt;p&gt;简而言之，Python 中的变量都是对&lt;strong&gt;实体的引用&lt;/strong&gt;，但并&lt;strong&gt;不是实体本身&lt;/strong&gt;；此外，Python 的函数传参仍然&lt;strong&gt;遵循按值传递&lt;/strong&gt;，结合这两点就能搞明白 Python 的传参行为。&lt;/p&gt;
-&lt;p&gt;先抛开具体的编程语言，如果有以下伪代码：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;a=1
-a=2&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;多数语言会把这两行解释为：声明一个变量 a，在内存里分配空间，这个空间&lt;strong&gt;就叫 a&lt;/strong&gt;，里面存 1；然后把这个空间里的值更新成 2。&lt;/p&gt;
-&lt;p&gt;但是 Python 中对变量（其实是对象）的处理有所不同。以上两行在 Python 中代表：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;创建一个对象（整数 1），放在内存里，再&lt;strong&gt;创建一个引用，这个引用叫做 a&lt;/strong&gt;，指向之前创建的对象&lt;/li&gt;
-&lt;li&gt;又创建一个对象（整数 2），放在内存里，把 a 指向这个新的对象&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;看到不同了吧？接下来讨论函数传参。&lt;/p&gt;
-&lt;h2&gt;Python 中的传参&lt;/h2&gt;
-&lt;p&gt;在 Python 中的函数传参是依照&lt;strong&gt;值传递&lt;/strong&gt;的；但由于 Python 中的变量都是引用，因此就有了以下这句有点绕的话：&lt;/p&gt;
-&lt;blockquote&gt;&lt;p&gt;Python passes references-to-objects by value (like Java), and everything in Python is an object.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;看以下代码段&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[1]
-[1, 2]
-[1, 2]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;调用 &lt;code&gt;func&lt;/code&gt; 并把 a 传入时，Python 在局部&lt;strong&gt;新建了一个局部的变量 a&lt;/strong&gt;，并把外部 a 的值赋值给了新的变量。由于 a 是引用，新的变量也是引用，都指向内存中的同一个列表对象，因此在函数内部对列表进行的操作也同样可以由外部的 a 观测到。&lt;/p&gt;
-&lt;p&gt;然而，要注意两个陷阱：对引用进行 &lt;strong&gt;re-assign&lt;/strong&gt;；以及对 &lt;strong&gt;immutable 对象&lt;/strong&gt;的处理。&lt;/p&gt;
-&lt;h2&gt;对引用 re-assign&lt;/h2&gt;
-&lt;p&gt;修改以上代码为：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c1"&gt;# 注意这里&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;输出：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;[1]
-['a']
-[1]&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;为什么函数内对 a 的修改不能被外部的 a 观测到？&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;a=['a']&lt;/code&gt; 这行代码并不是通过 a 修改 a 指向的 list，而是在内存中新建了一个列表对象 &lt;code&gt;['a']&lt;/code&gt;，并将函数内部的 a 指向了这个新的对象，并且此后的操作都针对这个新的列表对象；然而由于函数内部的 a 与外部的 a 是两个不同的变量，因此外部的 a 仍然指向之前的 list。这种操作称为 &lt;code&gt;re-assign&lt;/code&gt;，需要与 &lt;code&gt;append&lt;/code&gt; 这种针对对象本身的方法区别开。&lt;/p&gt;
-&lt;h2&gt;immutable 对象的处理&lt;/h2&gt;
-&lt;p&gt;如果不使用列表，而使用字符串：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;str&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;changed&amp;#39;&lt;/span&gt;
-    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;original&amp;#39;&lt;/span&gt;
-&lt;span class="n"&gt;func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;结果：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;original
-changed
-original&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;如果理解了前文的要点，那么针对 immutable 对象的处理并不难懂。由于 str 对象是 immutable 的（不可变对象），因此函数内部不能通过 a 修改指向的字符串，&lt;code&gt;a='changed'&lt;/code&gt; 这行代码实际是在进行 re-assign，也就是新建了一个字符串对象 &lt;code&gt;'changed'&lt;/code&gt;，使函数内部的 a 指向这个新的对象。&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;总而言之记住三点：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Python 中的变量是对象的引用，而不是对象本身&lt;/li&gt;
-&lt;li&gt;Python 按值传参&lt;/li&gt;
-&lt;li&gt;警惕对引用进行 re-assign 与通过引用修改对象的区别&lt;/li&gt;
-&lt;/ol&gt;
-</content><link href="http://blog.labulac.top/archives/variable-pass-paradim-in-python/" rel="alternate"/><published>2020-01-02T15:20:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-13T13:49:05.572309+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-16T05:15:28.185709+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-16T05:15:28.185955+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -101,7 +27,7 @@ ignored-classes=numpy,torch,cv,cv2&lt;/code&gt;&lt;/pre&gt;
     "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"
 ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个还可以。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-13T13:49:05.572281+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-16T05:15:28.185936+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;yum -y install davfs2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其他的比如Ubuntu之类的&lt;/p&gt;
@@ -127,7 +53,7 @@ mount.davfs 你的WebDAV地址 你想要挂载到的目录&lt;/code&gt;&lt;/pre&
 &lt;pre&gt;&lt;code&gt;ignore_dav_header 1&lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
 &lt;p&gt;来自：&lt;a href="https://moe.best/linux-memo/mount-webdav.html"&gt;如何在各个平台下挂载WebDAV&lt;/a&gt;。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-13T13:49:05.572253+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-16T05:15:28.185917+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.flv output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;视频截取：&lt;/strong&gt;&lt;/p&gt;
@@ -158,7 +84,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-13T13:49:05.572224+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-16T05:15:28.185898+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
@@ -169,7 +95,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-13T13:49:05.572195+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-16T05:15:28.185879+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
 &lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;h3&gt;准备&lt;/h3&gt;
 &lt;ul&gt;
@@ -186,7 +112,7 @@ file input3.mp4
 &lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;重启手机客户端&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-13T13:49:05.572166+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-16T05:15:28.185860+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
 &lt;p&gt;遇到这样的问题：&lt;/p&gt;
 &lt;p&gt;提示：“您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="836" data-height="294" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/NgQ0yL.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -203,7 +129,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;回车执行。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-13T13:49:05.572133+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-16T05:15:28.185839+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;Mac 升级系统后发现有些非官方渠道的软件，无法安装&lt;/p&gt;
 &lt;p&gt;同时发现 &lt;strong&gt;安全性与隐私&lt;/strong&gt; 的 &lt;strong&gt;允许从以下位置下载的应用：&lt;/strong&gt; 中的&lt;strong&gt;任何来源&lt;/strong&gt;选项也不见了...&lt;/p&gt;
 &lt;h3&gt;解决办法&lt;/h3&gt;
@@ -215,7 +141,7 @@ file input3.mp4
 &lt;p&gt;点击那个小黄锁，输入密码，选中。&lt;/p&gt;
 &lt;p&gt;然后安装你想要安装的软件 ！&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</id><title>Python pip3 运行出错：Missing dependencies for SOCK</title><updated>2020-03-13T13:49:05.572096+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</id><title>Python pip3 运行出错：Missing dependencies for SOCK</title><updated>2020-03-16T05:15:28.185817+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
 &lt;p&gt;pip安装报错Could not install packages due to an EnvironmentError: Missing dependencies for SOCK&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/Wnaa3a.png" alt="Wnaa3a" /&gt;&lt;figcaption&gt;Wnaa3a&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3&gt;解决方法&lt;/h3&gt;
@@ -223,7 +149,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;unset&lt;/span&gt; all_proxy &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset&lt;/span&gt; ALL_PROXY
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/" rel="alternate"/><published>2020-03-09T10:48:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ABC/</id><title>MacOS 删除灰色的ABC输入法</title><updated>2020-03-13T13:49:05.572034+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/" rel="alternate"/><published>2020-03-09T10:48:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ABC/</id><title>MacOS 删除灰色的ABC输入法</title><updated>2020-03-16T05:15:28.185793+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;总是很烦ABC输入法，明明不怎么需要&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/GPH9jG.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;又是灰色的，如何删除呢？&lt;/p&gt;
@@ -250,4 +176,28 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;打开系统完整性保护。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/ABC/" rel="alternate"/><published>2020-03-11T09:44:00+08:06</published></entry></feed>
+</content><link href="http://blog.labulac.top/archives/ABC/" rel="alternate"/><published>2020-03-11T09:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/谷歌云密码连接/</id><title>谷歌云密码连接</title><updated>2020-03-16T05:15:28.185752+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
+&lt;p&gt;新撸的谷歌云通过ssh秘钥连接太麻烦了&lt;/p&gt;
+&lt;p&gt;下面改用密码登陆，方便&lt;/p&gt;
+&lt;h3&gt;解决方法&lt;/h3&gt;
+&lt;p&gt;1.先登入谷歌云打开自带的ssh&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="514" data-height="498" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/Fld588.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2.切换到root角色&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo -i&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;3.修改SSH配置文件/etc/ssh/sshd_config&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;vi /etc/ssh/sshd_config&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;修改PermitRootLogin和PasswordAuthentication为yes&lt;/p&gt;
+&lt;p&gt;4.给root用户设置密码&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;passwd root&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;5.重启SSH服务使修改生效&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;sshd&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;连接&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ssh&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ip&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="1142" data-height="694" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/image-20200316131325472.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/谷歌云密码连接/" rel="alternate"/><published>2020-03-16T13:48:00+08:06</published></entry></feed>
