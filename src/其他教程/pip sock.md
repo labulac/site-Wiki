@@ -17,7 +17,7 @@ excerpt: pip
 
 pip安装报错Could not install packages due to an EnvironmentError: Missing dependencies for SOCK
 
-![Wnaa3a](https://gitee.com/labulac/pic/raw/master/uPic/Wnaa3a.png)
+![](https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/M9ll3D.png)
 
 ### 解决方法
 
