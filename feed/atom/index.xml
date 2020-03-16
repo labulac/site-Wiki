@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-16T05:15:28.185709+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-16T05:15:28.185955+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><id>http://blog.labulac.top/</id><title>LABULAC'S BLOG</title><updated>2020-03-16T05:21:32.792689+08:06</updated><author><name>D0raemon</name><email>vector051545@gmail.com</email></author><link href="http://blog.labulac.top/" rel="alternate"/><generator uri="https://lkiesow.github.io/python-feedgen" version="0.9.0">python-feedgen</generator><logo>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</logo><subtitle>labulac的blog站点</subtitle><entry><id>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</id><title>VS Code Pylint E1101 Module has no member 错误</title><updated>2020-03-16T05:21:32.793052+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -27,7 +27,7 @@ ignored-classes=numpy,torch,cv,cv2&lt;/code&gt;&lt;/pre&gt;
     "--generated-members=numpy.* ,torch.* ,cv2.* , cv.*"
 ]&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这个还可以。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-16T05:15:28.185936+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/" rel="alternate"/><published>2020-01-09T09:28:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/using-webdav-on-linux/</id><title>Linux 使用 WebDAV</title><updated>2020-03-16T05:21:32.793024+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;Centos &amp;amp; Fedora &amp;amp; RedHat&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;yum -y install davfs2&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;其他的比如Ubuntu之类的&lt;/p&gt;
@@ -53,7 +53,7 @@ mount.davfs 你的WebDAV地址 你想要挂载到的目录&lt;/code&gt;&lt;/pre&
 &lt;pre&gt;&lt;code&gt;ignore_dav_header 1&lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
 &lt;p&gt;来自：&lt;a href="https://moe.best/linux-memo/mount-webdav.html"&gt;如何在各个平台下挂载WebDAV&lt;/a&gt;。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-16T05:15:28.185917+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/using-webdav-on-linux/" rel="alternate"/><published>2020-02-10T19:58:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ffmpeg-cheat-sheet/</id><title>ffmpeg 常用指令</title><updated>2020-03-16T05:21:32.792997+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;&lt;strong&gt;视频格式转换：&lt;/strong&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -i input.flv output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;视频截取：&lt;/strong&gt;&lt;/p&gt;
@@ -84,7 +84,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ffmpeg -f concat -i filelist.txt -c copy output.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;注意尺寸与格式等。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-16T05:15:28.185898+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
+</content><link href="http://blog.labulac.top/archives/ffmpeg-cheat-sheet/" rel="alternate"/><published>2020-02-13T10:38:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/</id><title>使用 openssl 生成自签名证书</title><updated>2020-03-16T05:21:32.792969+00:00</updated><author><name>熊猫小A</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;p&gt;通过 openssl 生成私钥 server.key：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl genrsa -out server.key &lt;span class="m"&gt;1024&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;根据私钥生成证书申请文件 csr：&lt;/p&gt;
@@ -95,7 +95,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;openssl x509 -req -in server.csr -out server.crt -signkey server.key -days &lt;span class="m"&gt;3650&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;有效期 3650 天。自己调试开发足够了。&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-16T05:15:28.185879+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/generate-self-signed-cert-with-openssl/" rel="alternate"/><published>2020-03-01T13:15:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/telegram/</id><title>原生 Telegram 解锁</title><updated>2020-03-16T05:21:32.792941+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;介绍&lt;/h3&gt;
 &lt;p&gt;&lt;img src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/CRRSNC.png" alt="" style="zoom:33%;" /&gt;&lt;/p&gt;
 &lt;h3&gt;准备&lt;/h3&gt;
 &lt;ul&gt;
@@ -112,7 +112,7 @@ file input3.mp4
 &lt;li&gt;Web：&lt;strong&gt;Settings→Show Sensitive Content&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;重启手机客户端&lt;/li&gt;
 &lt;/ol&gt;
-</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-16T05:15:28.185860+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/telegram/" rel="alternate"/><published>2020-03-05T20:18:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/显示隐藏的系统文件/</id><title>“您不能使用以点“.”开头的名称，由于系统预留的解决方法</title><updated>2020-03-16T05:21:32.792912+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;描述&lt;/h3&gt;
 &lt;p&gt;遇到这样的问题：&lt;/p&gt;
 &lt;p&gt;提示：“您不能使用以点“.”开头的名称，因为这些名称已被系统预留。请选取其他名称。”&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="836" data-height="294" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/NgQ0yL.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -129,7 +129,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;回车执行。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-16T05:15:28.185839+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/显示隐藏的系统文件/" rel="alternate"/><published>2020-03-07T11:54:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/允许任何安装来源/</id><title>MacOS 允许任何安装来源</title><updated>2020-03-16T05:21:32.792882+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;Mac 升级系统后发现有些非官方渠道的软件，无法安装&lt;/p&gt;
 &lt;p&gt;同时发现 &lt;strong&gt;安全性与隐私&lt;/strong&gt; 的 &lt;strong&gt;允许从以下位置下载的应用：&lt;/strong&gt; 中的&lt;strong&gt;任何来源&lt;/strong&gt;选项也不见了...&lt;/p&gt;
 &lt;h3&gt;解决办法&lt;/h3&gt;
@@ -141,7 +141,7 @@ file input3.mp4
 &lt;p&gt;点击那个小黄锁，输入密码，选中。&lt;/p&gt;
 &lt;p&gt;然后安装你想要安装的软件 ！&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</id><title>Python pip3 运行出错：Missing dependencies for SOCK</title><updated>2020-03-16T05:15:28.185817+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/允许任何安装来源/" rel="alternate"/><published>2020-03-07T15:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</id><title>Python pip3 运行出错：Missing dependencies for SOCK</title><updated>2020-03-16T05:21:32.792850+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
 &lt;p&gt;pip安装报错Could not install packages due to an EnvironmentError: Missing dependencies for SOCK&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/Wnaa3a.png" alt="Wnaa3a" /&gt;&lt;figcaption&gt;Wnaa3a&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3&gt;解决方法&lt;/h3&gt;
@@ -149,7 +149,7 @@ file input3.mp4
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;unset&lt;/span&gt; all_proxy &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset&lt;/span&gt; ALL_PROXY
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/" rel="alternate"/><published>2020-03-09T10:48:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ABC/</id><title>MacOS 删除灰色的ABC输入法</title><updated>2020-03-16T05:15:28.185793+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/" rel="alternate"/><published>2020-03-09T10:48:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/ABC/</id><title>MacOS 删除灰色的ABC输入法</title><updated>2020-03-16T05:21:32.792815+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;总是很烦ABC输入法，明明不怎么需要&lt;/p&gt;
 &lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/GPH9jG.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;又是灰色的，如何删除呢？&lt;/p&gt;
@@ -176,7 +176,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;打开系统完整性保护。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
-</content><link href="http://blog.labulac.top/archives/ABC/" rel="alternate"/><published>2020-03-11T09:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/谷歌云密码连接/</id><title>谷歌云密码连接</title><updated>2020-03-16T05:15:28.185752+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
+</content><link href="http://blog.labulac.top/archives/ABC/" rel="alternate"/><published>2020-03-11T09:44:00+08:06</published></entry><entry><id>http://blog.labulac.top/archives/谷歌云密码连接/</id><title>谷歌云密码连接</title><updated>2020-03-16T05:21:32.792753+00:00</updated><author><name>labulac</name><email>vector051545@gmail.com</email><uri>https://labulac.top</uri></author><content>&lt;h3&gt;问题&lt;/h3&gt;
 &lt;p&gt;新撸的谷歌云通过ssh秘钥连接太麻烦了&lt;/p&gt;
 &lt;p&gt;下面改用密码登陆，方便&lt;/p&gt;
 &lt;h3&gt;解决方法&lt;/h3&gt;
