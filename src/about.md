@@ -18,7 +18,7 @@ tags:
 
 ---
 
-**注：为了您的浏览体验，请尽量使用 Chrome、Firefox、Safari 浏览本站。博客不针对 IE 和 Edge 解决兼容问题。**
+**注：为了浏览体验，请尽量使用 Chrome、Firefox、Safari 浏览本站。博客不针对 IE 和 Edge 解决兼容问题。**
 
 ------
 
