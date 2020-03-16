@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Mon, 16 Mar 2020 05:21:32 +0806</lastBuildDate><pubDate>Mon, 16 Mar 2020 05:21:32 +0806</pubDate><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link><description>labulac的blog站点</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cdn.jsdelivr.net/gh/labulac/site-Wiki@gh-pages/android-chrome-512x512.png</url><title>LABULAC'S BLOG</title><link>http://blog.labulac.top/</link></image><language>zh-CN</language><lastBuildDate>Mon, 16 Mar 2020 05:51:57 +0806</lastBuildDate><pubDate>Mon, 16 Mar 2020 05:51:57 +0806</pubDate><item><title>VS Code Pylint E1101 Module has no member 错误</title><link>http://blog.labulac.top/archives/vs-code-pylint-e1101-module-has-no-member/</link><description>&lt;p&gt;VS Code 出现类似这样的问题：&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;Pylint E1101 Module 'torch' has no 'from_numpy' member...&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;这是 Pylint 的问题，三种方案都行：&lt;/p&gt;
@@ -143,7 +143,7 @@ file input3.mp4
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
 </description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/允许任何安装来源/</guid><pubDate>Sat, 07 Mar 2020 15:44:00 +0806</pubDate></item><item><title>Python pip3 运行出错：Missing dependencies for SOCK</title><link>http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</link><description>&lt;h3&gt;问题&lt;/h3&gt;
 &lt;p&gt;pip安装报错Could not install packages due to an EnvironmentError: Missing dependencies for SOCK&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/Wnaa3a.png" alt="Wnaa3a" /&gt;&lt;figcaption&gt;Wnaa3a&lt;/figcaption&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="1068" data-height="456" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/M9ll3D.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;h3&gt;解决方法&lt;/h3&gt;
 &lt;p&gt;终端输入以下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;unset&lt;/span&gt; all_proxy &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset&lt;/span&gt; ALL_PROXY
@@ -151,7 +151,7 @@ file input3.mp4
 &lt;p&gt;&lt;strong&gt;以上&lt;/strong&gt;&lt;/p&gt;
 </description><author>vector051545@gmail.com (labulac)</author><guid isPermaLink="true">http://blog.labulac.top/archives/pip安装报错 Could not install packages due to an EnvironmentError/</guid><pubDate>Mon, 09 Mar 2020 10:48:00 +0806</pubDate></item><item><title>MacOS 删除灰色的ABC输入法</title><link>http://blog.labulac.top/archives/ABC/</link><description>&lt;h3&gt;问题来源&lt;/h3&gt;
 &lt;p&gt;总是很烦ABC输入法，明明不怎么需要&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/GPH9jG.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="1074" data-height="932" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/d1UslK.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;又是灰色的，如何删除呢？&lt;/p&gt;
 &lt;h3&gt;解决&lt;/h3&gt;
 &lt;p&gt;1.首先要关闭系统的完整性保护，即关闭SIP，方法是在重启电脑时按住 command + R 进入恢复模式，然后选择实用工具中的 终端，输入&lt;/p&gt;
@@ -168,7 +168,7 @@ file input3.mp4
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;同样输入密码确认，之后便用PlistEdit Pro打开了这个配置文件。&lt;/p&gt;
 &lt;p&gt;3.删除红框键值下的子键中带有ABC字样的整个键值&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;&lt;img data-width="-1" data-height="-1" src="https://gitee.com/labulac/pic/raw/master/uPic/A0lUBr.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;figure&gt;&lt;img data-width="1068" data-height="614" src="https://cdn.jsdelivr.net/gh/labulac/pic@master/uPic/WJHZ3v.png" alt="" /&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;4.删除之后点击保存，如果不能直接保存则可以先将修改的后的文件另存为到桌面上，然后再将文件复制到 ~/Library/Preferences 此处，至此已经修改完成。&lt;/p&gt;
 &lt;p&gt;5.下面是将系统完整性保护打开：&lt;/p&gt;
 &lt;p&gt;重启，进入恢复模式，然后输入&lt;/p&gt;
