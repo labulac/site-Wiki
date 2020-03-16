@@ -2,7 +2,7 @@
 layout: post
 title: MacOS 的 DS Store
 slug: DS Store15111616
-date: 2020-03-16 13:44
+date: 2020-03-16 13:45
 status: publish
 author: labulac
 categories: 
@@ -33,7 +33,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores true
 
 ##### 二、删除.DS_Store文件
 
-通过终端命令行执行find命令找到并删除，命令需要root权限，而且不要输入错误，万一输入错误导致系统文件被删除，会非常的危险⚠️，所以这是一个比较危险的操作，操作者需要小心甚微，命令如下：
+通过终端命令行执行find命令找到并删除，命令需要root权限，而且不要输入错误，万一输入错误导致系统文件被删除，会非常的危险，所以这是一个比较危险的操作，操作者需要小心甚微，命令如下：
 
 ```bash
 sudo find / -name ".DS_Store" -depth -exec rm {} \;
