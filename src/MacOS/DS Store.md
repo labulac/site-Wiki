@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MacOS 的 DS Store
-slug: DS Store
+slug: DS Store15111616
 date: 2020-03-16 13:44
 status: publish
 author: labulac
